@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class PostResponseDTO {
 
     private Long id;
+    private String username;
+    private String password;
     private String title;
     private String description;
     private String content;

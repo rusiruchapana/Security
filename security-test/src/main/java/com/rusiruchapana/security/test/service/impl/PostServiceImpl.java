@@ -1,5 +1,7 @@
 package com.rusiruchapana.security.test.service.impl;
 
+
+import com.rusiruchapana.security.test.config.SecurityConfig;
 import com.rusiruchapana.security.test.dto.request.PostRequestDTO;
 import com.rusiruchapana.security.test.dto.response.PostResponseDTO;
 import com.rusiruchapana.security.test.entity.Post;
@@ -20,6 +22,10 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
     @Autowired
     private PostMapper postMapper;
+    @Autowired
+    private SecurityConfig config;
+
+
 
     @Override
     public PostResponseDTO createPost(PostRequestDTO postRequestDTO) {
@@ -43,9 +49,12 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+
     @Override
     public PostResponseDTO updatePost(Long postId, PostRequestDTO postRequestDTO) {
         Post post = postRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("The given id is not in db."));
+        post.setUsername(postRequestDTO.getUsername());
+        post.setPassword(config.passwordEncoder().encode(postRequestDTO.getPassword()));
         post.setTitle(postRequestDTO.getTitle());
         post.setDescription(postRequestDTO.getDescription());
         post.setContent(postRequestDTO.getContent());

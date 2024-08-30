@@ -17,6 +17,12 @@ public class Post {
     private Long id;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
